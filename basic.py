@@ -10,13 +10,14 @@ import os
 
 
 
-def load_image(foldername,filename,colorkey = None):
+def load_image(filename,colorkey = None):
+    filename = os.path.join("image",filename)
     try:
-        image = pygame.image.load(os.path.join(foldername,filename))
+        image = pygame.image.load(filename)
     except pygame.error as message:
         print ,"Cannot load image:",filename
         raise SystemExit
-    image = image.convert()
+    image = image.convert_alpha()
     if colorkey != None:
         if colorkey == -1:
             colorkey = image.get_at((0,0))
@@ -24,6 +25,10 @@ def load_image(foldername,filename,colorkey = None):
     return image,image.get_rect()
 
 #使い方　mobImg,mobRect = load_image("image","metamon.png",colorkey=-1)
+
+def load_sound(filename):
+    filename = os.path.join("sound",filename)
+    return pygame.mixer.Sound(filename)
 
 SCR_RECT = Rect(0,0,1536,864) #PCの解像度に合わせること推奨
 #SCR_WIDTH,SCR_HEIGHT = 1536,864
